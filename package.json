@@ -1,0 +1,29 @@
+{
+  "name": "svg-to-jsx-loader",
+  "version": "1.0.0",
+  "description": "SVG to JSX loader module for webpack",
+  "author": "Vladimir Kutepov",
+  "license": "MIT",
+  "homepage": "https://github.com/frenzzy/svg-to-jsx-loader#readme",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frenzzy/svg-to-jsx-loader.git"
+  },
+  "bugs": {
+    "url": "https://github.com/frenzzy/svg-to-jsx-loader/issues"
+  },
+  "keywords": [
+    "WebPack",
+    "Loader",
+    "SVG",
+    "JSX",
+    "React"
+  ],
+  "dependencies": {
+    "svg-to-jsx": "0.0.13"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
