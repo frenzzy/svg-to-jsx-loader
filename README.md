@@ -2,6 +2,8 @@
 
 [Webpack](http://webpack.github.io/) loader that allows to load SVG files as [stateless functional](https://facebook.github.io/react/blog/2015/10/07/react-v0.14.html#stateless-functional-components) [React](http://facebook.github.io/react/) components with [svg-to-jsx](https://github.com/janjakubnanista/svg-to-jsx).
 
+[![Build Status](https://travis-ci.org/frenzzy/svg-to-jsx-loader.svg?branch=master)](https://travis-ci.org/frenzzy/svg-to-jsx-loader)
+
 ## Installation
 
 ```shell
