@@ -35,12 +35,11 @@ loaders: [
   {
     test: /\.(js|svg)$/i,
     loader: 'babel-loader', // v6 or later
+    exclude: /node_modules/,
     query: {
-      presets: ['react', 'es2015']
-    },
-    plugins: [
-      'transform-runtime'
-    ]
+      presets: ['react', 'es2015'],
+      plugins: ['transform-runtime']
+    }
   },
   {
     test: /\.svg$/i,

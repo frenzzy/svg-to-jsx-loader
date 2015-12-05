@@ -16,11 +16,9 @@ module.exports = {
         loader: 'babel-loader',
         include: __dirname,
         query: {
-          presets: ['react', 'es2015']
-        },
-        plugins: [
-          'transform-runtime'
-        ]
+          presets: ['react', 'es2015'],
+          plugins: ['transform-runtime']
+        }
       },
       {
         test: /\.svg$/i,
