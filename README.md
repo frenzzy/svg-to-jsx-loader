@@ -1,6 +1,6 @@
 # svg-to-jsx-loader
 
-Simple [Webpack](http://webpack.github.io/) loader that allows to load SVG files as [React](http://facebook.github.io/react/) components with [svg-to-jsx](https://github.com/janjakubnanista/svg-to-jsx).
+[Webpack](http://webpack.github.io/) loader that allows to load SVG files as [stateless functional](https://facebook.github.io/react/blog/2015/10/07/react-v0.14.html#stateless-functional-components) [React](http://facebook.github.io/react/) components with [svg-to-jsx](https://github.com/janjakubnanista/svg-to-jsx).
 
 ## Installation
 
@@ -19,9 +19,30 @@ loaders: [
   {
     test: /\.svg$/,
     loaders: [
-      'babel-loader',
+      'babel-loader', // v5
       'svg-to-jsx-loader'
     ]
+  }
+]
+```
+
+Or you can find a working example in [test/webpack.config.js](https://github.com/frenzzy/svg-to-jsx-loader/blob/master/test/webpack.config.js) file:
+
+```js
+loaders: [
+  {
+    test: /\.(js|svg)$/i,
+    loader: 'babel-loader', // v6 or later
+    query: {
+      presets: ['react', 'es2015']
+    },
+    plugins: [
+      'transform-runtime'
+    ]
+  },
+  {
+    test: /\.svg$/i,
+    loader: 'svg-to-jsx-loader'
   }
 ]
 ```
@@ -29,8 +50,9 @@ loaders: [
 ### Input example
 
 ```svg
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!-- forward-icon.svg -->
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 24 24" width="24" height="24">
   <path d="M21 11l-7-7v4C7 9 4 14 3 19c2.5-3.5 6-5.1 11-5.1V18l7-7z"/>
 </svg>
 ```
@@ -40,17 +62,13 @@ loaders: [
 ```js
 import React from 'react';
 
-class Svg extends React.Component {
-  render() {
-    return (
-      <svg width="24" height="24" viewBox="0 0 24 24" {...this.props}>
-        <path d="M21 11l-7-7v4C7 9 4 14 3 19c2.5-3.5 6-5.1 11-5.1V18l7-7z"/>
-      </svg>
-    );
-  }
-};
+const ForwardIcon = (props) => (
+  <svg height="24" width="24" version="1.1" viewBox="0 0 24 24" {...props}>
+    <path d="M21 11l-7-7v4C7 9 4 14 3 19c2.5-3.5 6-5.1 11-5.1V18l7-7z"/>
+  </svg>
+);
 
-export default Svg;
+export default ForwardIcon;
 ```
 
 ## Inspiration
@@ -61,4 +79,4 @@ export default Svg;
 
 ## License
 
-MIT (http://www.opensource.org/licenses/mit-license.php)
+This source code is licensed under the MIT license found in the [LICENSE.txt](https://github.com/frenzzy/svg-to-jsx-loader/blob/master/LICENSE.txt) file.
