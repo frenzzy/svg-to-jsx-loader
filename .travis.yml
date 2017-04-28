@@ -1,8 +1,12 @@
 language: node_js
 sudo: false
 node_js:
-  - stable
+  - '7'
+  - '6'
 install:
-  - npm install
+  - yarn install
 script:
-  - npm test
+  - yarn run lint
+  - yarn run test:cover
+after_success:
+  - yarn run coveralls

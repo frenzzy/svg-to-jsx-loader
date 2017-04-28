@@ -1,9 +1,12 @@
-# Logs
-logs
-*.log
-npm-debug.log*
+# Include your project-specific ignores in this file
+# Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
 
-# Compiled binary addons (http://nodejs.org/api/addons.html)
+# Logs
+npm-debug.log
+yarn-error.log
+
+# Compiled addons (http://nodejs.org/api/addons.html)
+coverage
 build
 
 # Dependency directory

@@ -1,30 +1,33 @@
-var svgtojsx = require('svg-to-jsx');
-var path = require('path');
+const path = require('path');
+const svgToJsx = require('svg-to-jsx');
 
 function toUpperCamelCase(string) {
-  return string.split(/[^a-zA-Z]+/).map(function (str) {
-    return str[0].toUpperCase() + str.slice(1);
-  }).join('');
+  return string.split(/[^a-zA-Z]+/).map(word =>
+    word && word[0].toUpperCase() + word.slice(1)
+  ).join('');
 }
 
-module.exports = function (content) {
+module.exports = function loader(content) {
   this.cacheable();
 
-  var callback = this.async();
-  var fileName = path.basename(this.resourcePath, '.svg');
-  var componentName = toUpperCamelCase(fileName) || 'Svg';
+  const callback = this.async();
+  const fileName = path.basename(this.resourcePath, '.svg');
+  const componentName = toUpperCamelCase(fileName) || 'Svg';
 
-  svgtojsx(content, function (err, jsx) {
-    if (err) return callback(err);
+  svgToJsx(content, (err, jsx) => {
+    if (err) {
+      callback(err);
+      return;
+    }
 
     callback(null,
-      'import React from \'react\';\n\n' +
+      `import React from 'react';\n` +
 
-      'const ' + componentName + ' = (props) => (' +
-      jsx.replace(/(<svg[^>]*)(>)/i, '$1 {...props}$2') +
-      ');\n\n' +
+      `function ${componentName}(props) {` +
+      `  return (${jsx.replace(/(<svg[^>]*)(>)/i, '$1 {...props}$2')});` +
+      `}\n` +
 
-      'export default ' + componentName + ';\n'
+      `export default ${componentName};`
     );
   });
 };

@@ -1,39 +1,67 @@
-var path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const rimraf = require('rimraf');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
+const webpackConfig = {
+
   entry: {
-    app: './test/app.js'
+    app: './test/app.js',
   },
+
   output: {
-    path: path.join(__dirname, '../build'),
-    filename: '[name].[chunkhash].js'
+    path: path.resolve(__dirname, '../build'),
+    filename: '[name].[chunkhash].js',
   },
+
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(js|svg)$/i,
         loader: 'babel-loader',
         include: __dirname,
         query: {
-          presets: ['react', 'es2015'],
-          plugins: ['transform-runtime']
-        }
+          presets: ['react'],
+        },
       },
       {
         test: /\.svg$/i,
-        loader: './svg-to-jsx-loader-spec.js'
+        loader: path.resolve(__dirname, './svg-to-jsx-loader-spec.js'),
       },
       {
         test: /\.svg$/i,
-        loader: '../index.js'
-      }
-    ]
+        loader: path.resolve(__dirname, '../index.js'),
+      },
+    ],
   },
+
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: path.join(__dirname, './app.html')
-    })
-  ]
+      template: path.join(__dirname, './app.html'),
+    }),
+  ],
+
+  stats: {
+    colors: true,
+    reasons: true,
+    hash: false,
+    version: false,
+    timings: true,
+    chunks: false,
+    chunkModules: false,
+    cached: false,
+    cachedAssets: false,
+  },
+
 };
+
+const bundler = webpack(webpackConfig);
+
+rimraf.sync('build/*');
+
+bundler.run((err, stats) => {
+  if (err) throw err;
+
+  console.info(stats.toString(webpackConfig.stats));
+});
